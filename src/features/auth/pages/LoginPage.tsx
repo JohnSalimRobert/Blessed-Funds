@@ -2,13 +2,19 @@ import FormBuilder from "@/components/app/FormBuilder"
 import { loginFields } from "../fields/loginFields"
 import { Link } from "@tanstack/react-router"
 import AuthWrapper from "../wrapper/authWrapper"
+import { useAuthStore } from "@/store"
 
 export const LoginPage = () => {
+    const { login } = useAuthStore((state) => state);
+    const onSubmit = (data: any) => {
+        console.log("Login data", data)
+    }
+
     return (
         <AuthWrapper header="Log in">
             <FormBuilder
                 fields={loginFields}
-                onSubmit={(data) => console.log(data)}
+                onSubmit={onSubmit}
                 submitLabel="Log in"
                 footer={
                     <div className="py-5 text-center text-sm">
