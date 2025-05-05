@@ -14,19 +14,23 @@ export default function FormBuilder<T extends FieldValues>({
   }: FormBuilderProps<T>){
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<T>({defaultValues});
     const formVariants = {
-        hidden: { opacity: 0, y: 20 },
+        hidden: { opacity: 0, scale: 0.5 },
         visiable: {
             opacity: 1,
-            y: 0,
-            transition: { duration: 0.8, ease: "easeOut" },
-        }
+            scale: 1,
+            transition: {
+                duration: 0.8,
+                delay: 0.2,
+                ease: [0, 0.71, 0.2, 1.01],
+            }
+        },
     }
     const handleValidSubmit: SubmitHandler<T> = (data) => {
         onSubmit(data);
     }
     
     return(
-        <motion.form onSubmit={handleSubmit(handleValidSubmit)} className="space-y-4" initial="hidden" animate="visiable" variants={formVariants}>
+        <motion.form onSubmit={handleSubmit(handleValidSubmit)} className="space-y-4" initial="hidden" animate="visiable"  variants={formVariants}>
             {fields.map((field: FormFieldConfig) =>  {
                 const shareProps = {
                     field,
